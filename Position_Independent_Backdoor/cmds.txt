@@ -3,9 +3,6 @@
 3) "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx64\x64\ml64.exe" c_shell.asm /link /entry:AlignRSP
 
 
-
-
-
 Stack alignment set for x64 
 ; https://github.com/mattifestation/PIC_Bindshell/blob/master/PIC_Bindshell/AdjustStack.asm
 
