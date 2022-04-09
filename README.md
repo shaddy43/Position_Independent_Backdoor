@@ -7,3 +7,10 @@ This code is called position independent code because it doesn't depend on a lin
 It uses cmd to get commands from the c3 server after every 10 seconds and execute it on the system.
 With the help of MSVC we can convert this code to .asm file and then link those assembly instructions to a binary.
 After that we can extract shellcode from the .text section of that binary.
+
+
+A demo video provided that takes commands from c3 and execute on victim system:
+
+
+https://user-images.githubusercontent.com/34940939/162588916-1950dcda-4c3c-4117-879a-2f8a96a9c5ab.mp4
+
