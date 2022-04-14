@@ -10,6 +10,8 @@ After that we can extract shellcode from the .text section of that binary.
 
 
 A demo video provided that takes commands from c3 and execute on victim system:
+This demo uses a custom injector https://github.com/shaddy43/Donut_Injector, with custom shellcode encryptor https://github.com/shaddy43/AES_Shellcode_Encryptor
+to encrypt and save custom created shellcode which is injected in a running process. 
 
 
 https://user-images.githubusercontent.com/34940939/162588916-1950dcda-4c3c-4117-879a-2f8a96a9c5ab.mp4
